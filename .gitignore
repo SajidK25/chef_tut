@@ -1,2 +1,4 @@
 .vagrant/
 .vagrant
+nodes/
+local-mode-cache/
