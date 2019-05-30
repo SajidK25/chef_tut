@@ -22,9 +22,12 @@ template '/tmp/create_app_user.js' do
         :app_pass     => node['db']['app']['password']
     })
 end
-template '/etc/check_app_user.js' do
+template '/tmp/check_app_user.js' do
     source 'check_app_user.js.erb'
     action :create
+    variables({
+        :app_user     => node['db']['app']['user'],
+    })
 end
 
 execute 'Create the admin user for the database' do
@@ -38,6 +41,7 @@ cookbook_file '/etc/mongodb.conf' do
     notifies:restart,"service[mongodb]"
 end
 execute 'Create the app user for the database' do
-    command "mongo  -u #{node['db']['admin']['user']} -p #{node['db']['admin']['password']} admin< /tmp/create_app_user.js"
+    command "mongo  -u #{node['db']['admin']['user']} -p #{node['db']['admin']['password']} admin < /tmp/create_app_user.js"
     action :run
+    only_if { `mongo --quiet -u #{node['db']['admin']['user']} -p #{node['db']['admin']['password']} admin < /tmp/check_app_user.js`.include? "0" }
 end
