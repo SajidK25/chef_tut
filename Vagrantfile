@@ -77,6 +77,9 @@ Vagrant.configure("2") do |config|
     db.vm.hostname = "mongodb"
     db.vm.box = "bento/ubuntu-16.04"
     db.vm.network "private_network", ip: "192.168.33.10"
+    config.vm.provision "shell",inline:<<-SHELL
+      echo "192.168.33.100 chef" >>/etc/hosts
+    SHELL
   end
   config.vm.define "app" do |app|
     app.vm.hostname = "node"
