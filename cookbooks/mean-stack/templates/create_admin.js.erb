@@ -1,0 +1,8 @@
+use admin
+db.createUser({
+    user:"<%= @admin_user %>",
+    pwd:"<%= @admin_pass %>",
+    roles:[
+        {role:"root",db:"admin"}
+    ]
+})
