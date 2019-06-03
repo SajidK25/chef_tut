@@ -1,5 +1,3 @@
-default['db']['admin']['user']='root'
-default['db']['admin']['password']='password'
-
-default['db']['app']['user']='nodeuser'
-default['db']['app']['password']='password'
+default['app']['dir']="/opt/app"
+default['app']['port']="3000"
+default['db']['host']="192.168.33.10"
