@@ -86,6 +86,9 @@ Vagrant.configure("2") do |config|
     app.vm.box = "node"
     app.vm.box = "bento/centos-7.4"
     app.vm.network "private_network", ip: "192.168.33.20"
+    config.vm.provision "shell",inline:<<-SHELL
+      echo "192.168.33.100 chef" >>/etc/hosts
+    SHELL
   end
   config.vm.define "web" do |web|
     web.vm.hostname = "nginx"
